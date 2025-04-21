@@ -2,7 +2,7 @@
 layout: post
 title: "Agile"
 date: 2025-04-18 19:32:13 +0100
-categories: jekyll update
+categories: cpts preparation
 ---
 
 # Attack Path
@@ -28,7 +28,7 @@ We have the domain name. Let’s add that to /etc/hosts.
 
 Let’s visit the site superpass.htb. Upon visiting, we get to a login form. Let’s try admin:admin. We get an error but it tells us what SQL query it used:
 
-![image.png](/assets/image.png)
+![agile-image.png](/assets/agile/agile-image.png)
 
 Let’s try some SQL injection:
 
@@ -46,11 +46,11 @@ gobuster dir -u http://superpass.htb/ -w /usr/share/seclists/Discovery/Web-Conte
 
 Let’s just register as a new user and login.
 
-![image.png](/assets/image-1.png)
+![agile-image.png](/assets/agile/agile-image-1.png)
 
 When we add a new password, it uses POST request to update. And when click on export, we get an option to download the csv password file. Looking at the request, it might be vulnerable to LFI:
 
-![image.png](/assets/image-2.png)
+![agile-image.png](/assets/agile/agile-image-2.png)
 
 Let’s try testing the parameter fn:
 
@@ -58,7 +58,7 @@ Let’s try testing the parameter fn:
 GET /download?fn=../../../../etc/passwd
 ```
 
-![image.png](/assets/image-3.png)
+![agile-image.png](/assets/agile/agile-image-3.png)
 
 ```bash
 The active users on the computer is:
@@ -69,9 +69,9 @@ dev_admin:x:1003:1003::/home/dev_admin:/bin/bash
 
 When error occurs, we realise it’s a Werkzeug debugger
 
-![image.png](/assets/image-4.png)
+![agile-image.png](/assets/agile/agile-image-4.png)
 
-![image.png](/assets/image-5.png)
+![agile-image.png](/assets/agile/agile-image-5.png)
 
 Get the console by hovering over the error line and at the far right side there is a console button. We search werkzeug hacktricks to find an exploit and all the variables we need before the exploit. First save the python script to attack dir. 
 
@@ -87,7 +87,7 @@ www-data
 #Next we need the modname
 ```
 
-![image.png](/assets/image-6.png)
+![agile-image.png](/assets/agile/agile-image-6.png)
 
 Research leads us to this blog https://www.bengrewell.com/cracking-flask-werkzeug-console-pin/ with this table:
 
@@ -435,13 +435,13 @@ chrome://inspect
 Then click on configure
 ```
 
-![image.png](/assets/image-7.png)
+![agile-image.png](/assets/agile/agile-image-7.png)
 
 Now click on inspect to see. Click on Vault and we can see the password. We can either copy the cookies so we can obtain the session as log on as dev or simply copy the password from here
 
-![image.png](/assets/image-8.png)
+![agile-image.png](/assets/agile/agile-image-8.png)
 
-![image.png](/assets/image-9.png)
+![agile-image.png](/assets/agile/agile-image-9.png)
 
 We can verify if the password works with cme:
 

@@ -1,0 +1,30 @@
+﻿Exploit,Checkbox,Comment
+"[-] Default route:
+default via 192.168.0.2 dev eth0 onlink ",No,Probably also the DC
+"/etc/cron.d:                                                                                                                                                                                                                                                        
+-rw-r--r--  1 root root  201 Jun  7  2021 e2scrub_all
+",No,
+"[-] Available shells:                                                                                                                                     
+# /etc/shells: valid login shells                                                                                                                         
+/bin/sh                                                                                                                                                   
+/bin/bash                                                                                                                                                 
+/usr/bin/bash                                                                                                                                             
+/bin/rbash                                                                                                                                                
+/usr/bin/rbash                                                                                                                                            
+/bin/dash                                                                                                                                                 
+/usr/bin/dash",No,
+"### INTERESTING FILES ####################################
+[-] Useful file locations:
+/usr/bin/nc
+/usr/bin/netcat
+/usr/bin/wget
+/usr/bin/gcc
+/usr/bin/curl",No,
+"+] Possibly interesting SGID files:
+-rwxr-sr-x 1 root tty 22760 Jan 20  2022 /usr/bin/write.ul",No,
+"[-] Location and contents (if accessible) of .bash_history file(s):
+/home/webster/.bash_history",Yes,N/a
+"[-] Location and Permissions (if accessible) of .bak file(s):
+-rw-r--r-- 1 webster webster 7138 Apr 27  2022 /var/www/nonode/node_modules/form-data/README.md.bak  ",Yes,N/a
+"[-] Anything juicy in docker-compose.yml:
+-rw-r--r-- 1 root root 1192 Jul  1  2020 /etc/nginx/owasp-modsecurity-crs/tests/docker-compose.yml",Yes,N/a
