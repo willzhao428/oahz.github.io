@@ -10,4 +10,5 @@ For my MSc dissertation, I investigated concept drift in malware classification,
 
 Currently, I'm enhancing my practical skills in SOC operations and offensive security by working toward the Hack The Box Certified Defensive Security Analyst (CDSA) and Certified Penetration Testing Specialist (CPTS) certifications.
 
-This collection of writeups documents all the CTFs I’ve completed, featuring detailed technical breakdowns to help reinforce my own learning — and hopefully assist others in the community as well.
+This collection of writeups showcases CTFs I’ve completed, with new ones added weekly. Each includes a detailed technical breakdown to reinforce my learning and support others in the cybersecurity community.
+
