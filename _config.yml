@@ -24,7 +24,7 @@ baseurl: "/oahz.github.io" # the subpath of your site, e.g. /blog
 url: "https://willzhao428.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
-theme: minima
+#theme: minima
 plugins:
   - jekyll-feed
 

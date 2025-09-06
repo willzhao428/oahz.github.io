@@ -1,0 +1,41 @@
+---
+layout: default
+---
+
+<div class="home">
+  {%- if page.title -%}
+    <h1>{{ page.title }}</h1>
+  {%- endif -%}
+
+  {{ content }}
+
+  {%- if site.posts.size > 0 -%}
+    <h2 class="post-list-heading">{{ page.list_title | default: "Recent CTF Writeups" }}</h2>
+    <ul class="post-list">
+      {%- for post in site.posts -%}
+      <li class="post-list-item">
+        <h3>
+          <a class="post-link" href="{{ post.url | relative_url }}">
+            {{ post.title | escape }}
+          </a>
+        </h3>
+        <p class="post-meta">
+          {{ post.date | date: "%b %-d, %Y" }}
+          {%- if post.categories.size > 0 -%}
+            <br>
+            {%- for category in post.categories -%}
+              <span class="ctf-category">{{ category }}</span>
+            {%- endfor -%}
+          {%- endif -%}
+          {%- if post.difficulty -%}
+            <span class="ctf-category difficulty-{{ post.difficulty | downcase }}">{{ post.difficulty }}</span>
+          {%- endif -%}
+        </p>
+        {%- if post.excerpt -%}
+          <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+        {%- endif -%}
+      </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+</div>
