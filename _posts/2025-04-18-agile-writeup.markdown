@@ -2,7 +2,7 @@
 layout: post
 title: "Agile"
 date: 2025-04-18 19:32:13 +0100
-categories: cpts preparation
+categories: CPTS Playlist
 ---
 
 # Attack Path
