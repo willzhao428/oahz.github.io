@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "tartarsauce"
-date: 2025-09-010 
+date: 2025-09-10 
 categories: OSCP Playlist
 ---
 # tartarsauce
