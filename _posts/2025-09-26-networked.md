@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "lightweight"
+title: "networked"
 date: 2025-09-26 
 categories: OSCP Playlist
 ---
