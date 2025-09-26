@@ -1,3 +1,9 @@
+---
+layout: post
+title: "lacasadepapel"
+date: 2025-09-25 
+categories: OSCP Playlist
+---
 # lacasadepapel
 
 # Summary
@@ -57,7 +63,7 @@ Denied.
 
 Let’s visit the web page:
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image.png)
 
 Let’s fuzz:
 
@@ -92,7 +98,7 @@ Not much more to do.
 
 HTTPS:
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%201.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%201.png)
 
 Let’s fuzz for subdir:
 
@@ -134,7 +140,7 @@ ftp 10.10.10.131
 #username :)
 ```
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%202.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%202.png)
 
 Now another terminal, we use nc to connect to port 6200:
 
@@ -142,13 +148,13 @@ Now another terminal, we use nc to connect to port 6200:
 nc 10.10.10.131 6200
 ```
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%203.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%203.png)
 
 We get a Psy Shell
 
 PsySH (often typed as "psyshell") is an interactive REPL (Read-Eval-Print Loop) shell for PHP, allowing you to execute code, inspect variables, and debug interactively.
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%204.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%204.png)
 
 We attempt to use edit to try and write code:
 
@@ -161,7 +167,7 @@ PHP Warning:  proc_close() expects parameter 1 to be resource, null given in pha
 
 Disabled.
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%205.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%205.png)
 
 We can use rlwrap for a better shell:
 
@@ -297,15 +303,15 @@ Let’s save this ca private key. Now that we have the CA key we can use this to
 
 and click on the lock icon:
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%206.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%206.png)
 
 We then click More information, a tab will pop up, where we can select to view the site certificate:
 
 Now we can scroll down to the Download section, and download the cert pem:
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%207.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%207.png)
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%208.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%208.png)
 
 Now let’s verify whether the private key we obtained is the key pair to the public key contained in the cert we downloaded:
 
@@ -338,19 +344,19 @@ To recap, we are generating a private key → making a CSR → getting it signed
 
 Now let’s import it to firefox; go on firefox → go to Settings →Privacy & Security →View Certificates.
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%209.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%209.png)
 
 Now click import and upload the .p12 cert to Your Certificates:
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%2010.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%2010.png)
 
 Now visit the https page again:
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%2011.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%2011.png)
 
 We can click on the seasons and click a file to download. Capture the request with burp:
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%2012.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%2012.png)
 
 ```bash
 GET /file/U0VBU09OLTIvMDUuYXZp HTTP/1.1
@@ -384,7 +390,7 @@ In the URL we see a path parameter; let’s see if it’s vulnerable to LFI:
 https://10.10.10.131/?path=/etc/
 ```
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%2013.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%2013.png)
 
 Looks like it’s using scandir in the backend. 
 
@@ -392,7 +398,7 @@ Looks like it’s using scandir in the backend.
 https://10.10.10.131?path=../../../../../home
 ```
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%2014.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%2014.png)
 
 Let’s combine everything together, since we are probably user berlin (as we are in his home dir), let’s see his .ssh dir
 
@@ -400,7 +406,7 @@ Let’s combine everything together, since we are probably user berlin (as we ar
 https://10.10.10.131/?path=../.ssh
 ```
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%2015.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%2015.png)
 
 We should not use burp here as it crashes the box. Let’s just use curl:
 
@@ -609,4 +615,4 @@ nc -lnvp 4444
 
 We are now root:
 
-![image.png](lacasadepapel%20279068bbc57d8058a14ef9ab005479e3/image%2016.png)
+![image.png]({{ site.baseurl }}/assets/lacasadepapel//image%2016.png)
