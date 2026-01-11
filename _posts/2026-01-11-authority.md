@@ -98,11 +98,11 @@ From the open ports and services, the machine seems like DC. Let’s visit the t
 https://10.129.229.56:8443
 ```
 
-![image.png]({{ site.baseurl }}/assets/authroity/image.png)
+![image.png]({{ site.baseurl }}/assets/authority/image.png)
 
 We get the version of the application as well:
 
-![image.png]({{ site.baseurl }}/assets/authroity/image%201.png)
+![image.png]({{ site.baseurl }}/assets/authority/image%201.png)
 
 PWM v2.0.3. Let’s search up exploits associated with this version. We do not find anything interesting. Let’s move on for now. 
 
@@ -186,17 +186,17 @@ code .
 
 Looking through the PWM dir, we find the following credentials:
 
-![image.png]({{ site.baseurl }}/assets/authroity/image%202.png)
+![image.png]({{ site.baseurl }}/assets/authority/image%202.png)
 
 Let’s try to login back on the website:
 
-![image.png]({{ site.baseurl }}/assets/authroity/image%203.png)
+![image.png]({{ site.baseurl }}/assets/authority/image%203.png)
 
 It failed. 
 
 In the [README.md](http://README.md), we also find: 
 
-![image.png]({{ site.baseurl }}/assets/authroity/image%204.png)
+![image.png]({{ site.baseurl }}/assets/authority/image%204.png)
 
 Let’s try the suggested login:
 
@@ -204,7 +204,7 @@ Let’s try the suggested login:
 root:password
 ```
 
-![image.png]({{ site.baseurl }}/assets/authroity/image%205.png)
+![image.png]({{ site.baseurl }}/assets/authority/image%205.png)
 
 Using manspider to search for other password strings, we find the following:
 
@@ -305,7 +305,7 @@ DevT3st@123
 
 The middle password seems the most legitimate, let’s try using that login the Configuration Manager:
 
-![image.png]({{ site.baseurl }}/assets/authroity/image%206.png)
+![image.png]({{ site.baseurl }}/assets/authority/image%206.png)
 
 Let’s download the configuration as well and see if we can recover any password:
 
@@ -392,13 +392,13 @@ There are only 4 users.
 
 Going back to bloodhound, we check our privileges:
 
-![image.png]({{ site.baseurl }}/assets/authroity/image%207.png)
+![image.png]({{ site.baseurl }}/assets/authority/image%207.png)
 
 We are part of Remote Management users, which mean we can winrm onto the DC.
 
 Bloodhound has shown we might have certificates enrollment rights:
 
-![image.png]({{ site.baseurl }}/assets/authroity/image%208.png)
+![image.png]({{ site.baseurl }}/assets/authority/image%208.png)
 
 Let’s check with certipy for vulnerable templates.
 
@@ -490,7 +490,7 @@ ESC1 vulnerability. Searching up ESC1, we come across this post:
 
 https://www.blackhillsinfosec.com/abusing-active-directory-certificate-services-part-one/
 
-![image.png]({{ site.baseurl }}/assets/authroity/image%209.png)
+![image.png]({{ site.baseurl }}/assets/authority/image%209.png)
 
 In the enrollment rights, even though we don’t see authenticated users being having the rights to enroll, we see that domain computers are allowed to enroll to this certificate template.
 
@@ -625,6 +625,6 @@ Now let’s attempt to evil-winrm onto the machine:
 evil-winrm -i authority -u Administrator -p 'P@assword123'
 ```
 
-![image.png]({{ site.baseurl }}/assets/authroity/image%2010.png)
+![image.png]({{ site.baseurl }}/assets/authority/image%2010.png)
 
 We are now administrator.
