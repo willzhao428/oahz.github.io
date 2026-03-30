@@ -68,11 +68,11 @@ sudo nmap -sC -sV -oN nmap/principal 10.129.9.146
 
 Let’s visit the jetty application. 
 
-![image.png]({{ site.baseurl }}/assets/principal/image/.png)
+![image.png]({{ site.baseurl }}/assets/principal/image.png)
 
 We see the version of the application at the bottom and says powered by pac4j. Searchin up pac4j exploit, we come across this page: https://github.com/kernelzeroday/CVE-2026-29000
 
-![image.png]({{ site.baseurl }}/assets/principal/image/%201.png)
+![image.png]({{ site.baseurl }}/assets/principal/image%201.png)
 
 Let’s clone the repo:
 
@@ -94,7 +94,7 @@ python -m token_forge --jwks-url http://10.129.9.146:8080/.well-known/jwks.json 
 
 Did not work. Let’s manually see if the page exists:
 
-![image.png]({{ site.baseurl }}/assets/principal/image/%202.png)
+![image.png]({{ site.baseurl }}/assets/principal/image%202.png)
 
 Let’s fuzz:
 
@@ -263,23 +263,23 @@ uCGtwXsR1dB5bngYYgmulxDSHjjaoq9c7pvWRurdWbAP5byLezE0vMatuiWDjo1-gRxpGd4_0kmH.n6w
 
 Let’s copy and paste the token in the session storage, creating a new auth_token
 
-![image.png]({{ site.baseurl }}/assets/principal/image/%203.png)
+![image.png]({{ site.baseurl }}/assets/principal/image%203.png)
 
 Now, let’s visit dashboard
 
-![image.png]({{ site.baseurl }}/assets/principal/image/%204.png)
+![image.png]({{ site.baseurl }}/assets/principal/image%204.png)
 
 We are in. 
 
 Looking in settings, we find this: 
 
-![image.png]({{ site.baseurl }}/assets/principal/image/%205.png)
+![image.png]({{ site.baseurl }}/assets/principal/image%205.png)
 
 ```bash
 D3pl0y_$$H_Now42!
 ```
 
-![image.png]({{ site.baseurl }}/assets/principal/image/%206.png)
+![image.png]({{ site.baseurl }}/assets/principal/image%206.png)
 
 Notes suggest svc_deploy might be using the encryptionKey password. Let’s try:
 
@@ -289,7 +289,7 @@ ssh svc-deploy@10.129.9.146
 
 We are in:
 
-![image.png]({{ site.baseurl }}/assets/principal/image/%207.png)
+![image.png]({{ site.baseurl }}/assets/principal/image%207.png)
 
 No sudo privs:
 
@@ -363,6 +363,6 @@ Now let’s try logging in:
 ssh -i /tmp/id_pwn root@localhost
 ```
 
-![image.png]({{ site.baseurl }}/assets/principal/image/%208.png)
+![image.png]({{ site.baseurl }}/assets/principal/image%208.png)
 
 We are root.
